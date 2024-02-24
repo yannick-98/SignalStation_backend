@@ -1,12 +1,14 @@
 const { connection } = require("./database/connection");
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config({ path: "variables.env" });
 
 connection();
 
 //Crear servidor node
 const app = express();
-const port = 3901;
+const port = process.env.PORT || 5000;
+const host = process.env.HOST || "0.0.0.0";
 
 //Configurar cors
 app.use(cors());
@@ -16,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); //Recibir datos por form-urlencoded
 
 //Crear servidor y escuchar peticiones http
-app.listen(port, () => {
+app.listen(port, host, () => {
   console.log("Server working at port " + port);
 });
 
